@@ -30,9 +30,14 @@ const scrollToTop = () => {
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showStickyBtn, setShowStickyBtn] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+      // Show sticky button only after scrolling down 500px (past hero)
+      setShowStickyBtn(window.scrollY > 500);
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -56,6 +61,7 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2 group cursor-pointer" onClick={handleLogoClick}>
+            {/* Logo will be updated to be conditional later if needed, for now standard */}
             <div className="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center transition-transform group-hover:rotate-12 shadow-lg shadow-red-200">
               <span className="text-white font-bold text-xl">H</span>
             </div>
@@ -173,8 +179,8 @@ const ProcessStep: React.FC<{ number: string; title: string; desc: string; isLas
 
 const App: React.FC = () => {
   const socialLinks = {
-    github: "https://github.com/sametlimon",
-    linkedin: "https://www.linkedin.com/in/sametlimon/"
+    github: "https://github.com/Hegoweb",
+    linkedin: "https://www.linkedin.com/in/SametLimon"
   };
 
 
@@ -481,8 +487,8 @@ const App: React.FC = () => {
         </div>
       </footer>
 
-      {/* Sticky Mobile CTA */}
-      <div className="md:hidden fixed bottom-6 left-4 right-4 z-40">
+      {/* Sticky Mobile CTA - conditionally rendered */}
+      <div className={`md:hidden fixed bottom-6 left-4 right-4 z-40 transition-all duration-500 transform ${showStickyBtn ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'}`}>
         <a href="#contact" className="w-full py-5 bg-red-600 text-white rounded-3xl font-black shadow-2xl flex items-center justify-center gap-3 text-lg active:scale-95 transition-transform">
           Hemen Teklif Al <ArrowRight size={24} />
         </a>
