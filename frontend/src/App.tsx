@@ -1,15 +1,17 @@
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Monitor, 
-  Code2, 
-  Database, 
-  ShoppingCart, 
-  LifeBuoy, 
-  CheckCircle2, 
-  ArrowRight, 
-  Menu, 
-  X, 
+import { Toaster } from 'react-hot-toast';
+import { ContactForm } from './components/ui/ContactForm';
+import {
+  Monitor,
+  Code2,
+  Database,
+  ShoppingCart,
+  LifeBuoy,
+  CheckCircle2,
+  ArrowRight,
+  Menu,
+  X,
   Send,
   Github,
   Linkedin,
@@ -84,8 +86,8 @@ const Navbar: React.FC = () => {
 
           {/* Mobile Toggle */}
           <div className="md:hidden">
-            <button 
-              onClick={() => setIsOpen(!isOpen)} 
+            <button
+              onClick={() => setIsOpen(!isOpen)}
               className="text-slate-900 p-2 focus:outline-none transition-transform active:scale-90"
               aria-label="Toggle Menu"
             >
@@ -175,54 +177,7 @@ const App: React.FC = () => {
     linkedin: "https://www.linkedin.com/in/sametlimon/"
   };
 
-  const [formState, setFormState] = useState({ name: '', email: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formError, setFormError] = useState<string | null>(null);
-  const [formSuccess, setFormSuccess] = useState<string | null>(null);
 
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormError(null);
-    setFormSuccess(null);
-
-    if (!formState.name || !formState.email || !formState.message) {
-      setFormError('Lütfen tüm alanları doldurun.');
-      return;
-    }
-
-    try {
-      setIsSubmitting(true);
-
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000/api'}/contact`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify(formState),
-        }
-      );
-
-      const data = await response.json().catch(() => null);
-
-      if (!response.ok || !data?.success) {
-        const message =
-          data?.message ||
-          'Mesajınız gönderilirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.';
-        setFormError(message);
-        return;
-      }
-
-      setFormSuccess('Mesajınız başarıyla gönderildi! Sizinle en kısa sürede iletişime geçeceğiz.');
-      setFormState({ name: '', email: '', message: '' });
-    } catch {
-      setFormError('Mesajınız gönderilirken bir hata oluştu. Lütfen internet bağlantınızı kontrol edin.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <div className="min-h-screen selection:bg-red-100 selection:text-red-900 overflow-x-hidden">
@@ -260,7 +215,7 @@ const App: React.FC = () => {
                 <span className="font-extrabold text-slate-800 text-lg uppercase tracking-tighter">Tailwind</span>
               </div>
             </div>
-            
+
             <div className="flex-1 w-full relative">
               <div className="relative z-10 rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border-[12px] border-white transform lg:rotate-3 hover:rotate-0 transition-transform duration-700">
                 <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Dashboard Preview" className="w-full h-auto object-cover aspect-video" />
@@ -283,7 +238,7 @@ const App: React.FC = () => {
                 <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=400&q=80" className="rounded-3xl shadow-xl transform lg:rotate-2" alt="Office" />
               </div>
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-red-600 rounded-full flex items-center justify-center border-8 border-white shadow-2xl lg:flex hidden z-20">
-                 <span className="text-white font-black text-xl">Hego</span>
+                <span className="text-white font-black text-xl">Hego</span>
               </div>
             </div>
             <div className="space-y-8">
@@ -325,32 +280,32 @@ const App: React.FC = () => {
             <p className="text-lg text-slate-600 max-w-2xl mx-auto font-medium">İşletmenizin ihtiyacı olan tüm dijital altyapıyı modern standartlarda sunuyoruz.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <ServiceCard 
-              title="Web Tasarım & Frontend" 
+            <ServiceCard
+              title="Web Tasarım & Frontend"
               desc="Kullanıcıyı odağa alan, etkileşimi yüksek ve tamamen mobil uyumlu arayüzler tasarlıyoruz."
               items={["Responsive Tasarım", "UI/UX Tasarım", "React & Next.js", "Tailwind CSS"]}
               icon={<Smartphone />}
             />
-            <ServiceCard 
-              title="Özel Yazılım" 
+            <ServiceCard
+              title="Özel Yazılım"
               desc="İş süreçlerinize tam uyumlu, verimliliğinizi artıran ölçeklenebilir web uygulamaları geliştiriyoruz."
               items={["SaaS Çözümleri", "Özel CRM/ERP", "Yönetim Panelleri", "Veri Analitiği"]}
               icon={<Layers />}
             />
-            <ServiceCard 
-              title="Backend Çözümleri" 
+            <ServiceCard
+              title="Backend Çözümleri"
               desc="Yüksek trafikli projeler için PHP, Laravel ve Node.js ile güçlü ve güvenli altyapılar inşa ediyoruz."
               items={["Laravel API", "Node.js Mikroservis", "Database Optimizasyonu", "Hız & Güvenlik"]}
               icon={<Database />}
             />
-            <ServiceCard 
-              title="E-Ticaret" 
+            <ServiceCard
+              title="E-Ticaret"
               desc="Güvenli ödeme altyapıları ve pazaryeri entegrasyonları ile satışlarınızı artıracak platformlar kuruyoruz."
               items={["Pazaryeri API", "Ödeme Sistemleri", "Ürün Yönetimi", "SEO Odaklı"]}
               icon={<ShoppingCart />}
             />
-            <ServiceCard 
-              title="Web Geliştirme" 
+            <ServiceCard
+              title="Web Geliştirme"
               desc="En yeni web teknolojileri ile performans canavarı projeler üretiyoruz."
               items={["TypeScript", "API Entegrasyonları", "Frontend & Backend", "Modern Stack"]}
               icon={<Monitor />}
@@ -377,22 +332,22 @@ const App: React.FC = () => {
             <p className="text-lg text-slate-600 max-w-lg font-medium">Başarıyla teslim ettiğimiz projelerle müşterilerimizin dijital büyümesine katkı sağladık.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <ProjectCard 
-              title="Global E-Ticaret" 
-              category="E-Ticaret" 
-              image="https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=600&q=80" 
+            <ProjectCard
+              title="Global E-Ticaret"
+              category="E-Ticaret"
+              image="https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=600&q=80"
               link="#contact"
             />
-            <ProjectCard 
-              title="Fintech Yönetim Paneli" 
-              category="Özel Yazılım" 
-              image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" 
+            <ProjectCard
+              title="Fintech Yönetim Paneli"
+              category="Özel Yazılım"
+              image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80"
               link="#contact"
             />
-            <ProjectCard 
-              title="Kurumsal Marka Kimliği" 
-              category="Web Tasarım" 
-              image="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80" 
+            <ProjectCard
+              title="Kurumsal Marka Kimliği"
+              category="Web Tasarım"
+              image="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80"
               link="#contact"
             />
           </div>
@@ -425,106 +380,49 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-[3rem] shadow-2xl border border-slate-100 overflow-hidden flex flex-col lg:flex-row">
             <div className="lg:w-2/5 bg-slate-900 p-10 lg:p-16 text-white flex flex-col justify-between relative">
-               <div className="absolute top-0 right-0 w-64 h-64 bg-red-600 rounded-full blur-[120px] opacity-20 -translate-y-1/2 translate-x-1/2"></div>
-               <div className="relative z-10 space-y-12">
-                  <div>
-                    <h2 className="text-4xl font-black mb-6">İletişime Geçin</h2>
-                    <p className="text-slate-400 text-lg leading-relaxed">Yeni bir projeniz mi var? Gelin detayları birlikte konuşalım.</p>
-                  </div>
-                  
-                  <div className="space-y-8">
-                    <div className="flex items-center gap-6 group">
-                      <div className="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-red-600 transition-colors">
-                        <Mail size={24} className="text-red-500 group-hover:text-white" />
-                      </div>
-                      <div className="overflow-hidden">
-                        <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">E-posta</p>
-                        <p className="text-lg sm:text-xl font-bold break-all">sametlimon76@gmail.com</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-6 group">
-                      <div className="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-red-600 transition-colors">
-                        <Github size={24} className="text-red-500 group-hover:text-white" />
-                      </div>
-                      <div>
-                        <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">GitHub</p>
-                        <a href={socialLinks.github} target="_blank" rel="noreferrer" className="text-lg font-bold hover:text-red-400 transition-colors">@sametlimon</a>
-                      </div>
-                    </div>
+              <div className="absolute top-0 right-0 w-64 h-64 bg-red-600 rounded-full blur-[120px] opacity-20 -translate-y-1/2 translate-x-1/2"></div>
+              <div className="relative z-10 space-y-12">
+                <div>
+                  <h2 className="text-4xl font-black mb-6">İletişime Geçin</h2>
+                  <p className="text-slate-400 text-lg leading-relaxed">Yeni bir projeniz mi var? Gelin detayları birlikte konuşalım.</p>
+                </div>
 
-                    <div className="flex items-center gap-6 group">
-                      <div className="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-red-600 transition-colors">
-                        <Linkedin size={24} className="text-red-500 group-hover:text-white" />
-                      </div>
-                      <div>
-                        <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">LinkedIn</p>
-                        <a href={socialLinks.linkedin} target="_blank" rel="noreferrer" className="text-lg font-bold hover:text-red-400 transition-colors">samet-limon</a>
-                      </div>
+                <div className="space-y-8">
+                  <div className="flex items-center gap-6 group">
+                    <div className="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-red-600 transition-colors">
+                      <Mail size={24} className="text-red-500 group-hover:text-white" />
+                    </div>
+                    <div className="overflow-hidden">
+                      <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">E-posta</p>
+                      <p className="text-lg sm:text-xl font-bold break-all">sametlimon76@gmail.com</p>
                     </div>
                   </div>
-               </div>
+
+                  <div className="flex items-center gap-6 group">
+                    <div className="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-red-600 transition-colors">
+                      <Github size={24} className="text-red-500 group-hover:text-white" />
+                    </div>
+                    <div>
+                      <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">GitHub</p>
+                      <a href={socialLinks.github} target="_blank" rel="noreferrer" className="text-lg font-bold hover:text-red-400 transition-colors">@sametlimon</a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-6 group">
+                    <div className="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-red-600 transition-colors">
+                      <Linkedin size={24} className="text-red-500 group-hover:text-white" />
+                    </div>
+                    <div>
+                      <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">LinkedIn</p>
+                      <a href={socialLinks.linkedin} target="_blank" rel="noreferrer" className="text-lg font-bold hover:text-red-400 transition-colors">samet-limon</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            
+
             <div className="flex-1 p-8 lg:p-16">
-              <form onSubmit={handleFormSubmit} className="space-y-8">
-                <div className="grid sm:grid-cols-2 gap-8">
-                  <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-900 uppercase tracking-widest">Ad Soyad</label>
-                    <input 
-                      type="text" 
-                      required
-                      value={formState.name}
-                      onChange={(e) => setFormState({...formState, name: e.target.value})}
-                      className="w-full px-6 py-4 rounded-2xl border-2 border-slate-100 focus:border-red-600 outline-none transition-all font-medium" 
-                      placeholder="Adınız" 
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-900 uppercase tracking-widest">E-posta</label>
-                    <input 
-                      type="email" 
-                      required
-                      value={formState.email}
-                      onChange={(e) => setFormState({...formState, email: e.target.value})}
-                      className="w-full px-6 py-4 rounded-2xl border-2 border-slate-100 focus:border-red-600 outline-none transition-all font-medium" 
-                      placeholder="ornek@mail.com" 
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-900 uppercase tracking-widest">Mesajınız</label>
-                  <textarea 
-                    rows={4} 
-                    required
-                    value={formState.message}
-                    onChange={(e) => setFormState({...formState, message: e.target.value})}
-                    className="w-full px-6 py-4 rounded-2xl border-2 border-slate-100 focus:border-red-600 outline-none transition-all font-medium resize-none" 
-                    placeholder="Proje detaylarınızdan bahsedin..."
-                  ></textarea>
-                </div>
-                {formError && (
-                  <p className="text-sm font-medium text-red-600 bg-red-50 border border-red-100 rounded-2xl px-4 py-3">
-                    {formError}
-                  </p>
-                )}
-                {formSuccess && (
-                  <p className="text-sm font-medium text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-2xl px-4 py-3">
-                    {formSuccess}
-                  </p>
-                )}
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className={`w-full py-5 rounded-2xl font-black text-xl transition-all shadow-2xl flex items-center justify-center gap-3 transform active:scale-95 ${
-                    isSubmitting
-                      ? 'bg-slate-300 text-slate-600 cursor-not-allowed shadow-slate-200'
-                      : 'bg-red-600 text-white hover:bg-red-700 shadow-red-200'
-                  }`}
-                >
-                  {isSubmitting ? 'Gönderiliyor...' : 'Gönder'} <Send size={24} />
-                </button>
-              </form>
+              <ContactForm />
             </div>
           </div>
         </div>
@@ -553,7 +451,7 @@ const App: React.FC = () => {
                 </a>
               </div>
             </div>
-            
+
             <div>
               <h4 className="text-white font-black text-lg mb-8 uppercase tracking-widest">Hizmetler</h4>
               <ul className="space-y-4 text-slate-400 font-medium">
@@ -562,7 +460,7 @@ const App: React.FC = () => {
                 <li><a href="#services" className="hover:text-red-500 transition-colors">E-Ticaret</a></li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="text-white font-black text-lg mb-8 uppercase tracking-widest">Navigasyon</h4>
               <ul className="space-y-4 text-slate-400 font-medium">
@@ -572,7 +470,7 @@ const App: React.FC = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="pt-12 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 text-slate-500 text-sm font-bold uppercase tracking-widest">
             <p>© 2026 HegoWeb.</p>
             <div className="flex gap-10">
@@ -582,13 +480,14 @@ const App: React.FC = () => {
           </div>
         </div>
       </footer>
-      
+
       {/* Sticky Mobile CTA */}
       <div className="md:hidden fixed bottom-6 left-4 right-4 z-40">
         <a href="#contact" className="w-full py-5 bg-red-600 text-white rounded-3xl font-black shadow-2xl flex items-center justify-center gap-3 text-lg active:scale-95 transition-transform">
           Hemen Teklif Al <ArrowRight size={24} />
         </a>
       </div>
+      <Toaster position="top-center" />
     </div>
   );
 };
